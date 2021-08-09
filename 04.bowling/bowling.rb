@@ -1,19 +1,11 @@
 # frozen_string_literal: true
 
 inputs = ARGV[0].split(',')
-scores = []
 
-inputs.each do |s|
-  scores <<
-    if s == 'X'
-      10
-    else
-      s.to_i
-    end
-end
+scores = inputs.map { |s| s == 'X' ? 10 : s.to_i }
 
 flame_scores = []
-full_pin = 10
+FULL_PIN = 10
 i = 0
 
 while flame_scores.size < 10
@@ -21,11 +13,11 @@ while flame_scores.size < 10
   throw2 = scores[i + 1] if i + 1 < scores.size
   throw3 = scores[i + 2] if i + 2 < scores.size
 
-  if throw1 == full_pin # strike
+  if throw1 == FULL_PIN # strike
     total = throw1 + throw2 + throw3
     flame_scores.push(total)
     i += 1
-  elsif throw1 + throw2 == full_pin # spare
+  elsif throw1 + throw2 == FULL_PIN # spare
     total = throw1 + throw2 + throw3
     flame_scores.push(total)
     i += 2
@@ -37,4 +29,3 @@ while flame_scores.size < 10
 end
 
 puts flame_scores.sum
-
