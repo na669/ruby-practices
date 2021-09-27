@@ -1,6 +1,19 @@
 # frozen_string_literal: true
 
-files = Dir.glob('*')
+require 'optparse'
+
+option = {}
+OptionParser.new do |opt|
+  opt.on('-a', 'all hidden files') { |v| option[:a] = v }
+  opt.parse!(ARGV)
+end
+
+files = if option[:a]
+          Dir.glob('*', File::FNM_DOTMATCH)
+        else
+          Dir.glob('*')
+        end
+
 files = files.sort
 
 COLUMN = 3
