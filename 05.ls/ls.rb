@@ -5,6 +5,7 @@ require 'optparse'
 option = {}
 OptionParser.new do |opt|
   opt.on('-a', 'all hidden files') { |v| option[:a] = v }
+  opt.on('-r', 'reverse order') { |v| option[:r] = v }
   opt.parse!(ARGV)
 end
 
@@ -14,7 +15,11 @@ files = if option[:a]
           Dir.glob('*')
         end
 
-files = files.sort
+files = if option[:r]
+          files.sort.reverse
+        else
+          files.sort
+        end
 
 COLUMN = 3
 
